@@ -26,4 +26,28 @@ public class DbUtils {
         }
         return verificationCode;
     }
+
+    @SneakyThrows
+    public static void cleanData() {
+        var runner = new QueryRunner();
+        var cleanCards = "DELETE FROM cards;";
+        var cleanAuthCodes = "DELETE FROM auth_codes;";
+        var cleanCardTransactions = "DELETE FROM card_transactions;";
+        var cleanUsers = "DELETE FROM users";
+
+        try (
+                var conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                );
+                PreparedStatement preparedStatement = conn.prepareStatement(cleanCards);
+                PreparedStatement preparedStatement1 = conn.prepareStatement(cleanAuthCodes);
+                PreparedStatement preparedStatement2 = conn.prepareStatement(cleanCardTransactions);
+                PreparedStatement preparedStatement3 = conn.prepareStatement(cleanUsers);
+        ) {
+            runner.update(conn, cleanCards);
+            runner.update(conn, cleanAuthCodes);
+            runner.update(conn, cleanCardTransactions);
+            runner.update(conn, cleanUsers);
+        }
+    }
 }
