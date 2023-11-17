@@ -21,7 +21,7 @@ public class TestApi {
     User user = new User();
 
     @Test
-    @DisplayName("Логин с валидными данными")
+    @DisplayName("Логин с валидными данными!")
     void loginWithValidData() {
         open("http://localhost:9999");
         LoginPage loginPage = new LoginPage();
